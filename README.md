@@ -1,1 +1,3 @@
 # Implementing_Data_Structures
+
+This repo looks to implement various types of Data Structures, from the STL Library...

@@ -27,7 +27,10 @@ private:
 
 public:
     Vector() { reallocate(1); } // Initial capacity of 1
-
+    Vector(std::initializer_list<T> init) {
+        reallocate(init.size());
+        for (const auto& ele : init) push_back(ele);
+    }
     ~Vector() { delete[] data; }
 
     T* begin(){ return data; }
@@ -83,8 +86,10 @@ public:
     }
 };
 
-// Main function for testing the Vector class
-int main() {
+/* ============================================================== */
+// Mega Test #1: int 
+void testIntVector() {
+    cout << "---- Test with int ----\n";
     Vector<int> vec;
 
     // Test push_back
@@ -102,7 +107,7 @@ int main() {
     cout << "Test: Empty\n";
     string isEmpty = (vec.Empty()) ? "True" : "False";
     cout << "Is the vector Empty? " << isEmpty << "\n\n";
-    
+
     // Test pop_back
     cout << "Test: pop_back\n";
     vec.pop_back();
@@ -118,7 +123,7 @@ int main() {
 
     // Test swap
     cout << "Test: swap\n";
-    cout << "Before swap: vec[0] = " << vec[0] << ", vec[1] = " << vec[1] << "\n\n";
+    cout << "Before swap: vec[0] = " << vec[0] << ", vec[1] = " << vec[1] << "\n";
     vec.swap(&vec[0], &vec[1]);
     cout << "After swap: vec[0] = " << vec[0] << ", vec[1] = " << vec[1] << "\n\n";
 
@@ -142,20 +147,40 @@ int main() {
     try {
         cout << "Element at index 2: " << vec.at(2) << "\n";
         cout << "Element at index 10: " << vec.at(10) << "\n"; // Should throw exception
-    } 
+    }
     catch (const out_of_range& e) {
         cout << "Exception: " << e.what() << "\n\n";
     }
+}
 
-    // Test operator[] with exception handling
-    cout << "Test: operator[] with exception handling\n";
-    try {
-        cout << "Element at index 1 using operator[]: " << vec[1] << "\n";
-        cout << "Element at index 5 using operator[]: " << vec[5] << "\n"; // Should throw exception
-    } 
-    catch (const out_of_range& e) {
-        cout << "Exception: " << e.what() << "\n\n";
+/* ============================================================== */
+// Mega Test #2: string
+void testStringVector() {
+    cout << "---- Test with string ----\n";
+    Vector<string> vec;
+
+    // Test push_back
+    vec.push_back("Hello");
+    vec.push_back("World");
+    vec.push_back("Vector");
+    cout << "Vector elements after push_back: ";
+    for (size_t i = 0; i < vec.Size(); i++) {
+        cout << vec[i] << " ";
     }
+    cout << "\n";
 
+    // Test resize with a fill value
+    vec.resize(5, "Fill");
+    cout << "After resize with fill value 'Fill': ";
+    for (size_t i = 0; i < vec.Size(); i++) {
+        cout << vec[i] << " ";
+    }
+    cout << "\n";
+}
+
+/* ============================================================== */
+int main() {
+    testIntVector();
+    testStringVector();
     return 0;
 }

@@ -17,7 +17,6 @@ private:
         arr = newArr;
         capacity = newCapacity;
     }
-
 public:
     Vector() : arr(nullptr), capacity(0), length(0) {}
 
